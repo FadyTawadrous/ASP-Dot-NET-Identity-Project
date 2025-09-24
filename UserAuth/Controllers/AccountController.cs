@@ -23,11 +23,12 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
+            Console.WriteLine("Data is valid.");
             var user = new IdentityUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("login");
             }
             foreach (var error in result.Errors)
             {

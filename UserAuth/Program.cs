@@ -15,6 +15,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Relax password requirements for development/testing:
+// builder.Services.AddDefaultIdentity<IdentityUser>(options => {
+//     // Password settings for development/testing
+//     options.Password.RequireDigit = false;
+//     options.Password.RequireLowercase = false;
+//     options.Password.RequireNonAlphanumeric = false;
+//     options.Password.RequireUppercase = false;
+//     options.Password.RequiredLength = 4; // Example: Set a shorter length
+//     options.Password.RequiredUniqueChars = 1;
+// })
+//     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,7 +36,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseStaticFiles();
+
+// app.UseStaticFiles();
 
 app.UseRouting();
 
