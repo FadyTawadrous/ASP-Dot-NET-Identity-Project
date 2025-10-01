@@ -7,12 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Configure in-memory database
+// 1- Configure in-memory database
 builder.Services.AddDbContext<ApplicationDbContext>(Options =>
     Options.UseInMemoryDatabase("MyDB"));
 
-// Add Identity
-builder.Services.AddDefaultIdentity<IdentityUser>()
+// Add Default Identity thats preconfigured for development/testing
+// builder.Services.AddDefaultIdentity<IdentityUser>()
+//     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// 2- Add Identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Relax password requirements for development/testing:
@@ -26,6 +30,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 //     options.Password.RequiredUniqueChars = 1;
 // })
 //     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// 3- Add Authentication and Authorization services
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorizationBuilder();
 
 var app = builder.Build();
 
